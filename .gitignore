@@ -1,0 +1,17 @@
+# Java / Maven
+target/
+*.jar
+*.war
+
+# Angular / Node
+node_modules/
+dist/
+.angular/
+
+# IDE & OS
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+EOF

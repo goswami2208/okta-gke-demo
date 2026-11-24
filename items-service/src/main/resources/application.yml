@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  datasource:
+    url: ${DB2_URL:jdbc:db2://localhost:50000/DEMODB}
+    username: ${DB2_USER}
+    password: ${DB2_PASSWORD}
+    driver-class-name: com.ibm.db2.jcc.DB2Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate          # schema is owned by DBAs: see schema.sql
+    properties:
+      hibernate:
+        default_schema: ${DB2_SCHEMA:APP}
+        dialect: org.hibernate.dialect.DB2Dialect
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OKTA_ISSUER}            # https://<org>.okta.com/oauth2/default
+          audiences: ${OKTA_AUDIENCE:api://default}
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
